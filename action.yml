@@ -1,0 +1,42 @@
+name: CI Receipt
+description: Post the dollar cost of this GitHub Actions run, plus the YAML fixes that cut it.
+author: Shawn Nolan
+branding:
+  icon: bar-chart-2
+  color: green
+
+inputs:
+  github-token:
+    description: Token used to read jobs/workflow YAML and comment on the PR.
+    required: false
+    default: ${{ github.token }}
+  run-id:
+    description: Workflow run to price. Defaults to the current run.
+    required: false
+  budget-usd:
+    description: If set, the receipt flags (and optionally fails) when this-run cost exceeds this dollar amount.
+    required: false
+  fail-on-budget:
+    description: Fail the job when this-run cost exceeds budget-usd.
+    required: false
+    default: "false"
+  comment:
+    description: Post or update a PR comment. Set false to only write the job summary.
+    required: false
+    default: "true"
+  runs-per-month:
+    description: Assumed runs per month used only for monthly savings estimates.
+    required: false
+    default: "100"
+
+outputs:
+  total-usd:
+    description: This-run cost in USD (list price; $0 for public standard runners).
+  finding-count:
+    description: Number of suggested fixes.
+  over-budget:
+    description: "true if budget-usd was set and this-run cost exceeded it."
+
+runs:
+  using: node20
+  main: dist/index.js
