@@ -1,6 +1,6 @@
 # CI Receipt
 
-A receipt for every GitHub Actions run: **what it cost**, and **the two-line YAML change that cuts it**.
+A receipt for every GitHub Actions run: **what it cost** and **the two-line YAML change that cuts it**.
 
 Private `macos-latest` lint job for 4 minutes is **$0.248**. The same job on `ubuntu-latest` is **$0.024**. Receipt says that on the PR.
 
