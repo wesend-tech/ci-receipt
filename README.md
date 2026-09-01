@@ -6,19 +6,26 @@ A 4-minute `macos-latest` lint job on a private repo is **$0.248**. The same job
 
 ## Add it
 
-Put a `receipt` job last, and list every job you want priced in `needs`:
+A workflow file needs `name` and `on` at the top. Save this as `.github/workflows/ci.yml` (or merge the `receipt` job into a workflow you already have).
 
 ```yaml
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
 jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - run: npm test
+      - run: npm test   # replace with your real checks
 
   receipt:
-    needs: [test]
+    needs: [test]       # names of the jobs you want on the receipt
     if: always()
     runs-on: ubuntu-slim
     timeout-minutes: 5
@@ -33,7 +40,9 @@ jobs:
           runs-per-month: "100"
 ```
 
-`if: always()` still runs the receipt when earlier jobs fail.
+If you already have a workflow, add only the `receipt` job. Set `needs` to that file’s job ids (`build`, `lint`, …), not `test` unless you actually have a job named `test`.
+
+`if: always()` still runs the receipt when earlier jobs fail. Replace `npm test` with whatever that repo actually runs — a non-Node app will fail on `npm test`.
 
 On a **pull request** it posts one comment and updates that comment on later runs. On **push** it only writes the job summary (Actions → the run → Summary).
 
