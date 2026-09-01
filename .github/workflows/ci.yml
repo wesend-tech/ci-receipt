@@ -26,8 +26,7 @@ jobs:
       - name: Fail if dist is stale
         run: git diff --exit-code -- dist
 
-  # Last job: price this run and (on a PR) comment the receipt.
-  # uses: ./ means "the action in THIS repo" — no Marketplace publish needed.
+  # Price this run. uses: ./ runs the action from this repository.
   receipt:
     needs: [test]
     if: always()
