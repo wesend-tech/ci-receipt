@@ -1,0 +1,48 @@
+{
+  "name": "ci-receipt",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A receipt for every GitHub Actions run — cost per job plus the YAML fix.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build src/index.ts -o dist --source-map --license licenses.txt",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "receipt": "tsx src/cli.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.1",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "@vercel/ncc": "^0.38.3",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "author": "wesend-tech",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wesend-tech/ci-receipt.git"
+  },
+  "keywords": [
+    "ci",
+    "receipt",
+    "github",
+    "actions"
+  ],
+  "bugs": {
+    "url": "https://github.com/wesend-tech/ci-receipt/issues"
+  },
+  "homepage": "https://github.com/wesend-tech/ci-receipt#readme"
+}
