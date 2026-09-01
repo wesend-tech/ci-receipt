@@ -25,3 +25,21 @@ jobs:
       - run: npm run build
       - name: Fail if dist is stale
         run: git diff --exit-code -- dist
+
+  # Last job: price this run and (on a PR) comment the receipt.
+  # uses: ./ means "the action in THIS repo" — no Marketplace publish needed.
+  receipt:
+    needs: [test]
+    if: always()
+    runs-on: ubuntu-slim
+    timeout-minutes: 5
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        with:
+          budget-usd: "1.00"
+          runs-per-month: "100"
